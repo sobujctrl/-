@@ -5,11 +5,20 @@
  * এই তালিকায় থাকা যেকোনো ইমেইল Google Sign-In দিয়ে সিস্টেমে প্রবেশ করতে পারবে।
  */
 
-export const ALLOWED_EMAILS: string[] = [
-  'sobujbd679@gmail.com',
-  'teammate1@gmail.com',
-  'teammate2@gmail.com',
-];
+const envAllowedEmails = import.meta.env?.VITE_ALLOWED_EMAILS
+  ? String(import.meta.env.VITE_ALLOWED_EMAILS)
+      .split(',')
+      .map((e) => e.trim().toLowerCase())
+      .filter(Boolean)
+  : [];
+
+export const ALLOWED_EMAILS: string[] = envAllowedEmails.length > 0
+  ? envAllowedEmails
+  : [
+      'sobujbd679@gmail.com',
+      'teammate1@gmail.com',
+      'teammate2@gmail.com',
+    ];
 
 /**
  * কোনো ইমেইল অনুমোদিত কি না তা পরীক্ষা করে

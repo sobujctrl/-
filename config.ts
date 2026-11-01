@@ -17,15 +17,19 @@ export interface FirebaseClientConfig {
 
 const FIREBASE_CONFIG_STORAGE_KEY = 'user_firebase_custom_config_v1';
 
-// Default starter configuration from provisioned post-510005 project
+// Default configuration: reads from import.meta.env (Netlify / custom env) first,
+// with fallback to bundledConfig (post-510005 project)
+const env = import.meta.env || {};
+
 export const DEFAULT_FIREBASE_CONFIG: FirebaseClientConfig = {
-  apiKey: bundledConfig.apiKey || '',
-  authDomain: bundledConfig.authDomain || 'post-510005.firebaseapp.com',
-  projectId: bundledConfig.projectId || 'post-510005',
-  firestoreDatabaseId: bundledConfig.firestoreDatabaseId || '(default)',
-  storageBucket: bundledConfig.storageBucket || 'post-510005.firebasestorage.app',
-  messagingSenderId: bundledConfig.messagingSenderId || '',
-  appId: bundledConfig.appId || '',
+  apiKey: env.VITE_FIREBASE_API_KEY || bundledConfig.apiKey || '',
+  authDomain: env.VITE_FIREBASE_AUTH_DOMAIN || bundledConfig.authDomain || 'post-510005.firebaseapp.com',
+  projectId: env.VITE_FIREBASE_PROJECT_ID || bundledConfig.projectId || 'post-510005',
+  firestoreDatabaseId: env.VITE_FIREBASE_DATABASE_ID || bundledConfig.firestoreDatabaseId || '(default)',
+  storageBucket: env.VITE_FIREBASE_STORAGE_BUCKET || bundledConfig.storageBucket || 'post-510005.firebasestorage.app',
+  messagingSenderId: env.VITE_FIREBASE_MESSAGING_SENDER_ID || bundledConfig.messagingSenderId || '1017708746606',
+  appId: env.VITE_FIREBASE_APP_ID || bundledConfig.appId || '',
+  measurementId: env.VITE_FIREBASE_MEASUREMENT_ID || bundledConfig.measurementId || '',
 };
 
 /**
